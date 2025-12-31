@@ -16,13 +16,13 @@ jobs:
       - name: Configure AWS credentials
         run: |
           echo "✓ Configuring AWS credentials using GitHub OIDC (no long-lived secrets)"
-          echo "  - Role to assume: \${{ secrets.AWS_ROLE_ARN }}"
-          echo "  - Region: \${{ secrets.AWS_REGION }}"
+          # echo "  - Role to assume: \${{ secrets.AWS_ROLE_ARN }}"
+          # echo "  - Region: \${{ secrets.AWS_REGION }}"
 
       - name: Login to Amazon ECR
         run: |
           echo "✓ Logging in to Amazon ECR registry"
-          echo "  - Registry: \${{ vars.ECR_REGISTRY }}"
+          # echo "  - Registry: \${{ vars.ECR_REGISTRY }}"
 
       - name: Build Docker image
         run: |
@@ -36,9 +36,9 @@ jobs:
       - name: Push to ECR
         run: |
           echo "✓ Pushing Docker image to Amazon ECR"
-          echo "  - Image URI: \${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
+          # echo "  - Image URI: \${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
 
       - name: Output image URI
         run: |
           echo "✓ Setting output variable with image URI for downstream jobs"
-          echo "  - image-uri=\${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
+          # echo "  - image-uri=\${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"

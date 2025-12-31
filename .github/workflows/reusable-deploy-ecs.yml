@@ -21,13 +21,13 @@ jobs:
           echo "✓ Configuring AWS credentials using GitHub OIDC"
           echo "  - Authentication method: OpenID Connect (OIDC)"
           echo "  - No long-lived credentials stored in GitHub"
-          echo "  - Assuming IAM role: \${{ secrets.AWS_ROLE_ARN }}"
-          echo "  - Region: \${{ secrets.AWS_REGION }}"
+          # echo "  - Assuming IAM role: \${{ secrets.AWS_ROLE_ARN }}"
+          # echo "  - Region: \${{ secrets.AWS_REGION }}"
 
       - name: Login to Amazon ECR
         run: |
           echo "✓ Logging in to Amazon ECR"
-          echo "  - Registry: \${{ vars.ECR_REGISTRY }}"
+          # echo "  - Registry: \${{ vars.ECR_REGISTRY }}"
 
       - name: Render ECS task definition
         run: |
@@ -35,7 +35,7 @@ jobs:
           echo "  - Environment: ${{ inputs.environment }}"
           echo "  - Task definition family: cicd-template-app-task-${{ inputs.environment }}"
           echo "  - Container: app"
-          echo "  - New image URI: \${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
+          # echo "  - New image URI: \${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
 
       - name: Register task definition
         run: |
@@ -45,7 +45,7 @@ jobs:
       - name: Deploy to ECS
         run: |
           echo "✓ Deploying to Amazon ECS"
-          echo "  - Cluster: \${{ vars.ECS_CLUSTER_NAME }}"
+          # echo "  - Cluster: \${{ vars.ECS_CLUSTER_NAME }}"
           echo "  - Service: cicd-template-app-service-${{ inputs.environment }}"
           echo "  - Deployment type: Rolling update"
           echo "  - Waiting for service stability..."
