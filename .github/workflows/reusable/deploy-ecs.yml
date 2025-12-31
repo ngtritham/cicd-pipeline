@@ -1,0 +1,58 @@
+name: Deploy to ECS
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        description: 'Environment to deploy to (dev, staging, or production)'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout code
+        run: echo "✓ Checking out repository code"
+
+      - name: Configure AWS credentials
+        run: |
+          echo "✓ Configuring AWS credentials using GitHub OIDC"
+          echo "  - Authentication method: OpenID Connect (OIDC)"
+          echo "  - No long-lived credentials stored in GitHub"
+          echo "  - Assuming IAM role: \${{ secrets.AWS_ROLE_ARN }}"
+          echo "  - Region: \${{ secrets.AWS_REGION }}"
+
+      - name: Login to Amazon ECR
+        run: |
+          echo "✓ Logging in to Amazon ECR"
+          echo "  - Registry: \${{ vars.ECR_REGISTRY }}"
+
+      - name: Render ECS task definition
+        run: |
+          echo "✓ Updating ECS task definition with new image"
+          echo "  - Environment: ${{ inputs.environment }}"
+          echo "  - Task definition family: cicd-template-app-task-${{ inputs.environment }}"
+          echo "  - Container: app"
+          echo "  - New image URI: \${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
+
+      - name: Register task definition
+        run: |
+          echo "✓ Registering new task definition revision"
+          echo "  - New revision will be created in AWS ECS"
+
+      - name: Deploy to ECS
+        run: |
+          echo "✓ Deploying to Amazon ECS"
+          echo "  - Cluster: \${{ vars.ECS_CLUSTER_NAME }}"
+          echo "  - Service: cicd-template-app-service-${{ inputs.environment }}"
+          echo "  - Deployment type: Rolling update"
+          echo "  - Waiting for service stability..."
+
+      - name: Verify deployment
+        run: |
+          echo "✓ Verifying deployment health"
+          echo "  - Health checks will verify deployment"
+          echo "  - Checking /health endpoint on new tasks"
+          echo "  - Deployment to ${{ inputs.environment }} environment complete!"

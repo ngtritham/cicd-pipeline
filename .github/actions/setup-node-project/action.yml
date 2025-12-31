@@ -1,0 +1,13 @@
+name: 'Setup Node.js Project'
+description: 'Set up Node.js with caching and install dependencies'
+runs:
+  using: 'composite'
+  steps:
+    - name: Placeholder
+      run: |
+        echo "TODO: Composite action for Node.js setup"
+        echo "This will be implemented in Phase 2 with:"
+        echo "  - Set up Node.js from .nvmrc"
+        echo "  - Configure npm cache"
+        echo "  - Install dependencies"
+      shell: bash

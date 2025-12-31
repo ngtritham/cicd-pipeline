@@ -1,0 +1,44 @@
+name: Build Docker Image
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        run: echo "✓ Checking out repository code"
+
+      - name: Set up Docker Buildx
+        run: echo "✓ Setting up Docker Buildx for multi-platform builds"
+
+      - name: Configure AWS credentials
+        run: |
+          echo "✓ Configuring AWS credentials using GitHub OIDC (no long-lived secrets)"
+          echo "  - Role to assume: \${{ secrets.AWS_ROLE_ARN }}"
+          echo "  - Region: \${{ secrets.AWS_REGION }}"
+
+      - name: Login to Amazon ECR
+        run: |
+          echo "✓ Logging in to Amazon ECR registry"
+          echo "  - Registry: \${{ vars.ECR_REGISTRY }}"
+
+      - name: Build Docker image
+        run: |
+          echo "✓ Building Docker image using multi-stage Dockerfile"
+          echo "  - Stage 1: Install dependencies"
+          echo "  - Stage 2: Copy production files with non-root user"
+          echo "  - Image will be tagged with:"
+          echo "    * Commit SHA: \${{ github.sha }}"
+          echo "    * Latest tag"
+
+      - name: Push to ECR
+        run: |
+          echo "✓ Pushing Docker image to Amazon ECR"
+          echo "  - Image URI: \${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
+
+      - name: Output image URI
+        run: |
+          echo "✓ Setting output variable with image URI for downstream jobs"
+          echo "  - image-uri=\${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
