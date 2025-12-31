@@ -9,20 +9,20 @@ jobs:
   # Parallel execution: All three jobs run concurrently
   build:
     name: Build Docker Image
-    uses: ./.github/workflows/reusable/build.yml
+    uses: ./.github/workflows/reusable-build.yml
 
   security-scan:
     name: Security Scanning
-    uses: ./.github/workflows/reusable/security-scan.yml
+    uses: ./.github/workflows/reusable-security-scan.yml
 
   unit-test:
     name: Unit Tests
-    uses: ./.github/workflows/reusable/unit-test.yml
+    uses: ./.github/workflows/reusable-unit-test.yml
 
   # Sequential execution: Deploy only after all parallel jobs succeed
   deploy-dev:
     name: Deploy to Dev
     needs: [build, security-scan, unit-test]
-    uses: ./.github/workflows/reusable/deploy-ecs.yml
+    uses: ./.github/workflows/reusable-deploy-ecs.yml
     with:
       environment: dev
