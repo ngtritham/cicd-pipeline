@@ -1,0 +1,15 @@
+{
+  "name": "cicd-template-app",
+  "version": "1.0.0",
+  "description": "Sample Node.js application for CI/CD template - Phase 1 placeholder",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "echo 'TODO: node src/index.js'",
+    "test": "echo 'TODO: jest --coverage'",
+    "lint": "echo 'TODO: eslint src/'",
+    "security-check": "echo 'TODO: npm audit && snyk test'"
+  },
+  "keywords": ["cicd", "nodejs", "aws", "ecs", "terraform"],
+  "author": "",
+  "license": "MIT"
+}

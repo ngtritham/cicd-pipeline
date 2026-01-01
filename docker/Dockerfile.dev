@@ -1,0 +1,16 @@
+# TODO: Development Dockerfile with hot-reload
+#
+# Phase 2 implementation will include:
+# - FROM node:20-alpine
+# - WORKDIR /app
+# - Install dev dependencies (including nodemon)
+# - COPY package*.json ./
+# - RUN npm install (includes dev dependencies)
+# - Volume mount for source code
+# - CMD ["npm", "run", "dev"] with nodemon for auto-restart
+#
+# Key features:
+# - Includes all dev dependencies
+# - Source code mounted as volume for hot-reload
+# - Nodemon for automatic restart on file changes
+# - Faster development cycle

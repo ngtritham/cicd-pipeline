@@ -1,0 +1,19 @@
+# TODO: Snyk configuration
+#
+# Phase 2 implementation will include:
+# version: v1.25.0
+#
+# Severity threshold
+# severity-threshold: high
+#
+# Ignore specific vulnerabilities (false positives)
+# ignore:
+#   SNYK-JS-EXAMPLE-12345:
+#     - '*':
+#         reason: False positive
+#         expires: '2025-12-31T00:00:00.000Z'
+#
+# Exclude paths from scanning
+# exclude:
+#   - tests/
+#   - docs/

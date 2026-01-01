@@ -1,0 +1,20 @@
+# TODO: Trivy scanner configuration
+#
+# Phase 2 implementation will include:
+# severity:
+#   - CRITICAL
+#   - HIGH
+#
+# format: sarif
+#
+# vuln-type:
+#   - os
+#   - library
+#
+# scanners:
+#   - vuln
+#   - config
+#
+# timeout: 10m
+#
+# exit-code: 1  # Fail on vulnerabilities
