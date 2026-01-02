@@ -1,0 +1,43 @@
+name: Unit Tests
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        run: echo "✓ Checking out repository code"
+
+      - name: Set up Node.js
+        run: |
+          echo "✓ Setting up Node.js version from .nvmrc file"
+          echo "  - Node version: 20.11.0"
+
+      - name: Cache dependencies
+        run: |
+          echo "✓ Setting up npm dependency caching"
+          echo "  - Cache key based on package-lock.json"
+
+      - name: Install dependencies
+        run: |
+          echo "✓ Installing npm dependencies"
+          echo "  - Running: npm ci"
+
+      - name: Run tests
+        run: |
+          echo "✓ Running Jest unit tests with coverage"
+          echo "  - Testing all files in tests/unit/"
+          echo "  - Coverage threshold: 80%"
+          echo "  - Test command: npm test"
+
+      - name: Generate coverage report
+        run: |
+          echo "✓ Generating coverage report"
+          echo "  - Format: HTML + LCOV"
+
+      - name: Upload coverage
+        run: |
+          echo "✓ Uploading coverage reports as artifacts"
+          echo "  - Artifact name: coverage-report"

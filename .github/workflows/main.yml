@@ -1,0 +1,44 @@
+name: Main - Production CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  # Parallel execution: All three jobs run concurrently
+  build:
+    name: Build Docker Image
+    uses: ./.github/workflows/reusable-build.yml
+
+  security-scan:
+    name: Security Scanning
+    uses: ./.github/workflows/reusable-security-scan.yml
+
+  unit-test:
+    name: Unit Tests
+    uses: ./.github/workflows/reusable-unit-test.yml
+
+  # Sequential deployments with approval gates
+  deploy-dev:
+    name: Deploy to Dev
+    needs: [build, security-scan, unit-test]
+    uses: ./.github/workflows/reusable-deploy-ecs.yml
+    with:
+      environment: dev
+
+  deploy-staging:
+    name: Deploy to Staging
+    needs: deploy-dev
+    uses: ./.github/workflows/reusable-deploy-ecs.yml
+    with:
+      environment: staging
+    # Note: Requires manual approval if staging environment has required reviewers
+
+  deploy-production:
+    name: Deploy to Production
+    needs: deploy-staging
+    uses: ./.github/workflows/reusable-deploy-ecs.yml
+    with:
+      environment: production
+    # Note: Requires manual approval if production environment has required reviewers

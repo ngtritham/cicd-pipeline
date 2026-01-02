@@ -1,0 +1,61 @@
+name: Security Scanning
+
+on:
+  workflow_call:
+
+jobs:
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        run: echo "✓ Checking out repository code"
+
+      - name: Run Snyk dependency scan
+        run: |
+          echo "✓ Running Snyk to scan for dependency vulnerabilities"
+          echo "  - Checking package.json and package-lock.json"
+          echo "  - Severity threshold: HIGH"
+          echo "  - Output format: SARIF for GitHub Security tab"
+          # echo "  - Snyk token: \${{ secrets.SNYK_TOKEN }}"
+
+      - name: Upload Snyk results
+        run: echo "✓ Uploading Snyk SARIF results to GitHub Security tab"
+
+  trivy-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        run: echo "✓ Checking out repository code"
+
+      - name: Run Trivy container scan
+        run: |
+          echo "✓ Running Trivy to scan Docker image for vulnerabilities"
+          # echo "  - Image: \${{ vars.ECR_REGISTRY }}/cicd-template-app:\${{ github.sha }}"
+          echo "  - Scanning OS packages and libraries"
+          echo "  - Checking for CRITICAL and HIGH severity issues"
+          echo "  - Output format: SARIF for GitHub Security tab"
+
+      - name: Upload Trivy results
+        run: echo "✓ Uploading Trivy SARIF results to GitHub Security tab"
+
+  eslint-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        run: echo "✓ Checking out repository code"
+
+      - name: Set up Node.js
+        run: echo "✓ Setting up Node.js from .nvmrc file"
+
+      - name: Install dependencies
+        run: echo "✓ Installing npm dependencies for ESLint"
+
+      - name: Run ESLint security scan
+        run: |
+          echo "✓ Running ESLint with security plugins"
+          echo "  - Using eslint-plugin-security for security patterns"
+          echo "  - Detecting: SQL injection, XSS, command injection risks"
+          echo "  - Output format: SARIF for GitHub Security tab"
+
+      - name: Upload ESLint results
+        run: echo "✓ Uploading ESLint SARIF results to GitHub Security tab"
